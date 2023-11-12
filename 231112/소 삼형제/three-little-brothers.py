@@ -12,4 +12,6 @@ for i in range(N-1):
     else:
         maxCount=max(count,maxCount)
         count=1
+        
+maxCount=max(count,maxCount)     
 print(maxCount)
