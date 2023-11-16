@@ -12,3 +12,5 @@ for _ in range(T):
             else:
                 print(words.index(sorted_words[sorted_words.index(sorted_word)+int(pass_num)-1])+1) 
                 break
+    else:
+        print(-1)
