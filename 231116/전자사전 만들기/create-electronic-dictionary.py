@@ -1,18 +1,32 @@
 N, T = map(int, input().split())
-words = [input() for _ in range(N)]
-indexed_words = [(word, i) for i, word in enumerate(words)]
-sorted_indexed_words = sorted(indexed_words, key=lambda x: x[0])
+words = [input().strip() for _ in range(N)]
+indexed_words = sorted((word, i) for i, word in enumerate(words))
+
+def binary_search(prefix, find_last=False):
+    left, right = 0, len(indexed_words) - 1
+    result = -1
+    while left <= right:
+        mid = (left + right) // 2
+        if indexed_words[mid][0].startswith(prefix):
+            result = mid
+            if find_last:
+                left = mid + 1
+            else:
+                right = mid - 1
+        elif indexed_words[mid][0] < prefix:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return result
 
 for _ in range(T):
-    pass_num, search_word = map(str, input().split())
-    pass_num = int(pass_num)
-    found = False
-    for sorted_word, idx in sorted_indexed_words:
-        if sorted_word.startswith(search_word):
-            pass_num -= 1
-            if pass_num == 0:
-                print(idx + 1)
-                found = True
-                break
-    if not found:
+    k, prefix = input().split()
+    k = int(k)
+
+    first = binary_search(prefix)
+    last = binary_search(prefix, find_last=True)
+
+    if first == -1 or last - first + 1 < k:
         print(-1)
+    else:
+        print(indexed_words[first + k - 1][1] + 1)
